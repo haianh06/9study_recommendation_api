@@ -1,0 +1,4380 @@
+{
+  "schemas": [
+    "public"
+  ],
+  "tables": {
+    "admission_methods": {
+      "schema": "public",
+      "row_count": 1201,
+      "columns": [
+        {
+          "name": "id",
+          "type": "UUID",
+          "nullable": false,
+          "is_pk": true,
+          "is_fk": false
+        },
+        {
+          "name": "university_id",
+          "type": "UUID",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": true
+        },
+        {
+          "name": "number",
+          "type": "VARCHAR(10)",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "title",
+          "type": "VARCHAR(255)",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "subtitle",
+          "type": "VARCHAR(255)",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "method_categories",
+          "type": "ARRAY",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "markdown",
+          "type": "TEXT",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "slots",
+          "type": "JSONB",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "sort_order",
+          "type": "SMALLINT",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "updated_at",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "deleted_at",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ]
+    },
+    "admission_scores": {
+      "schema": "public",
+      "row_count": 25015,
+      "columns": [
+        {
+          "name": "id",
+          "type": "UUID",
+          "nullable": false,
+          "is_pk": true,
+          "is_fk": false
+        },
+        {
+          "name": "program_admission_id",
+          "type": "UUID",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": true
+        },
+        {
+          "name": "year",
+          "type": "SMALLINT",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "score",
+          "type": "NUMERIC(7, 2)",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "note",
+          "type": "TEXT",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "updated_at",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "deleted_at",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ]
+    },
+    "api_third_party_call_histories": {
+      "schema": "public",
+      "row_count": 35,
+      "columns": [
+        {
+          "name": "id",
+          "type": "BIGINT",
+          "nullable": false,
+          "is_pk": true,
+          "is_fk": false
+        },
+        {
+          "name": "user_id",
+          "type": "INTEGER",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "status",
+          "type": "VARCHAR(16)",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "action",
+          "type": "VARCHAR(255)",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "related_id",
+          "type": "VARCHAR(255)",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "request_case",
+          "type": "VARCHAR(255)",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "request_endpoint",
+          "type": "VARCHAR(512)",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "request_params",
+          "type": "JSONB",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "response_http_code",
+          "type": "VARCHAR(10)",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "response_data",
+          "type": "TEXT",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "duration_ms",
+          "type": "INTEGER",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "logs",
+          "type": "TEXT",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "updated_at",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ]
+    },
+    "attempt_answers": {
+      "schema": "public",
+      "row_count": 0,
+      "columns": [
+        {
+          "name": "id",
+          "type": "UUID",
+          "nullable": false,
+          "is_pk": true,
+          "is_fk": false
+        },
+        {
+          "name": "attempt_id",
+          "type": "UUID",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": true
+        },
+        {
+          "name": "exam_question_id",
+          "type": "UUID",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": true
+        },
+        {
+          "name": "selected_options",
+          "type": "JSONB",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "text_answer",
+          "type": "TEXT",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "is_correct",
+          "type": "BOOLEAN",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "score",
+          "type": "NUMERIC(5, 2)",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "time_spent_seconds",
+          "type": "INTEGER",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "answered_at",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "deleted_at",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "updated_at",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ]
+    },
+    "audit_logs": {
+      "schema": "public",
+      "row_count": 1845,
+      "columns": [
+        {
+          "name": "id",
+          "type": "BIGINT",
+          "nullable": false,
+          "is_pk": true,
+          "is_fk": false
+        },
+        {
+          "name": "actor_id",
+          "type": "INTEGER",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "actor_role",
+          "type": "VARCHAR(32)",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "action",
+          "type": "VARCHAR(64)",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "target_type",
+          "type": "VARCHAR(64)",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "target_id",
+          "type": "VARCHAR(512)",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "metadata",
+          "type": "JSONB",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "ip",
+          "type": "VARCHAR(64)",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "user_agent",
+          "type": "TEXT",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "request_id",
+          "type": "VARCHAR(64)",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "success",
+          "type": "BOOLEAN",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "error_message",
+          "type": "TEXT",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ]
+    },
+    "de_an_sections": {
+      "schema": "public",
+      "row_count": 1928,
+      "columns": [
+        {
+          "name": "id",
+          "type": "UUID",
+          "nullable": false,
+          "is_pk": true,
+          "is_fk": false
+        },
+        {
+          "name": "university_id",
+          "type": "UUID",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": true
+        },
+        {
+          "name": "number",
+          "type": "VARCHAR(20)",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "title",
+          "type": "VARCHAR(255)",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "markdown",
+          "type": "TEXT",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "sort_order",
+          "type": "SMALLINT",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "updated_at",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "deleted_at",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ]
+    },
+    "email_templates": {
+      "schema": "public",
+      "row_count": 8,
+      "columns": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "nullable": false,
+          "is_pk": true,
+          "is_fk": false
+        },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "updated_at",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "deleted_at",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "key",
+          "type": "VARCHAR(100)",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "name",
+          "type": "VARCHAR(200)",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "subject",
+          "type": "VARCHAR(300)",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "html_body",
+          "type": "TEXT",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "description",
+          "type": "TEXT",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "variables",
+          "type": "TEXT",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ]
+    },
+    "error_reports": {
+      "schema": "public",
+      "row_count": 1,
+      "columns": [
+        {
+          "name": "id",
+          "type": "UUID",
+          "nullable": false,
+          "is_pk": true,
+          "is_fk": false
+        },
+        {
+          "name": "user_id",
+          "type": "INTEGER",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "target",
+          "type": "VARCHAR(20)",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "exam_id",
+          "type": "UUID",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "question_id",
+          "type": "UUID",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "exam_attempt_id",
+          "type": "UUID",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "reason",
+          "type": "VARCHAR(30)",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "description",
+          "type": "TEXT",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "image_urls",
+          "type": "JSONB",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "status",
+          "type": "VARCHAR(20)",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "admin_note",
+          "type": "TEXT",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "resolved_by_id",
+          "type": "INTEGER",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "resolved_at",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "metadata",
+          "type": "JSONB",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "updated_at",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "deleted_at",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ]
+    },
+    "exam_attempts": {
+      "schema": "public",
+      "row_count": 12,
+      "columns": [
+        {
+          "name": "id",
+          "type": "UUID",
+          "nullable": false,
+          "is_pk": true,
+          "is_fk": false
+        },
+        {
+          "name": "user_id",
+          "type": "INTEGER",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": true
+        },
+        {
+          "name": "exam_id",
+          "type": "UUID",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": true
+        },
+        {
+          "name": "status",
+          "type": "VARCHAR(30)",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "started_at",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "last_active_at",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "submitted_at",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "duration_seconds",
+          "type": "INTEGER",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "score",
+          "type": "NUMERIC(6, 2)",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "correct_count",
+          "type": "INTEGER",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "total_questions",
+          "type": "INTEGER",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "metadata",
+          "type": "JSONB",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "deleted_at",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "updated_at",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ]
+    },
+    "exam_block_subjects": {
+      "schema": "public",
+      "row_count": 3,
+      "columns": [
+        {
+          "name": "id",
+          "type": "UUID",
+          "nullable": false,
+          "is_pk": true,
+          "is_fk": false
+        },
+        {
+          "name": "exam_block_id",
+          "type": "UUID",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": true
+        },
+        {
+          "name": "subject_id",
+          "type": "UUID",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": true
+        },
+        {
+          "name": "sort_order",
+          "type": "INTEGER",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "deleted_at",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "updated_at",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "mode",
+          "type": "VARCHAR(20)",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "flow_id",
+          "type": "UUID",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": true
+        },
+        {
+          "name": "program_id",
+          "type": "UUID",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": true
+        },
+        {
+          "name": "question_type",
+          "type": "VARCHAR(50)",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "difficulties",
+          "type": "JSONB",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "title",
+          "type": "VARCHAR(255)",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ]
+    },
+    "exam_blocks": {
+      "schema": "public",
+      "row_count": 1,
+      "columns": [
+        {
+          "name": "id",
+          "type": "UUID",
+          "nullable": false,
+          "is_pk": true,
+          "is_fk": false
+        },
+        {
+          "name": "code",
+          "type": "VARCHAR(20)",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "name",
+          "type": "VARCHAR(255)",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "description",
+          "type": "TEXT",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "sort_order",
+          "type": "INTEGER",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "is_active",
+          "type": "BOOLEAN",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "deleted_at",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "updated_at",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ]
+    },
+    "exam_programs": {
+      "schema": "public",
+      "row_count": 4,
+      "columns": [
+        {
+          "name": "id",
+          "type": "UUID",
+          "nullable": false,
+          "is_pk": true,
+          "is_fk": false
+        },
+        {
+          "name": "organization_id",
+          "type": "UUID",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": true
+        },
+        {
+          "name": "name",
+          "type": "VARCHAR(255)",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "short_name",
+          "type": "VARCHAR(100)",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "slug",
+          "type": "VARCHAR(255)",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "description",
+          "type": "TEXT",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "scoring_config",
+          "type": "JSONB",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "is_active",
+          "type": "BOOLEAN",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "sort_order",
+          "type": "INTEGER",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "deleted_at",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "updated_at",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ]
+    },
+    "exam_questions": {
+      "schema": "public",
+      "row_count": 33480,
+      "columns": [
+        {
+          "name": "id",
+          "type": "UUID",
+          "nullable": false,
+          "is_pk": true,
+          "is_fk": false
+        },
+        {
+          "name": "exam_id",
+          "type": "UUID",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": true
+        },
+        {
+          "name": "section_id",
+          "type": "UUID",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": true
+        },
+        {
+          "name": "question_id",
+          "type": "UUID",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": true
+        },
+        {
+          "name": "sort_order",
+          "type": "INTEGER",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "score_weight",
+          "type": "NUMERIC(5, 2)",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "display_number",
+          "type": "INTEGER",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "deleted_at",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "updated_at",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ]
+    },
+    "exam_sections": {
+      "schema": "public",
+      "row_count": 2271,
+      "columns": [
+        {
+          "name": "id",
+          "type": "UUID",
+          "nullable": false,
+          "is_pk": true,
+          "is_fk": false
+        },
+        {
+          "name": "exam_id",
+          "type": "UUID",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": true
+        },
+        {
+          "name": "section_name",
+          "type": "VARCHAR(255)",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "description",
+          "type": "TEXT",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "source_section_type",
+          "type": "VARCHAR(100)",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "sort_order",
+          "type": "INTEGER",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "total_questions",
+          "type": "INTEGER",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "duration_seconds",
+          "type": "INTEGER",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "scoring_config",
+          "type": "JSONB",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "deleted_at",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "updated_at",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ]
+    },
+    "exam_types": {
+      "schema": "public",
+      "row_count": 6,
+      "columns": [
+        {
+          "name": "id",
+          "type": "UUID",
+          "nullable": false,
+          "is_pk": true,
+          "is_fk": false
+        },
+        {
+          "name": "value",
+          "type": "VARCHAR(100)",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "label",
+          "type": "VARCHAR(255)",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "sort_order",
+          "type": "INTEGER",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "is_active",
+          "type": "BOOLEAN",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "deleted_at",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "updated_at",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ]
+    },
+    "exam_years": {
+      "schema": "public",
+      "row_count": 9,
+      "columns": [
+        {
+          "name": "id",
+          "type": "UUID",
+          "nullable": false,
+          "is_pk": true,
+          "is_fk": false
+        },
+        {
+          "name": "value",
+          "type": "VARCHAR(100)",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "label",
+          "type": "VARCHAR(255)",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "sort_order",
+          "type": "INTEGER",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "is_active",
+          "type": "BOOLEAN",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "deleted_at",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "updated_at",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ]
+    },
+    "exams": {
+      "schema": "public",
+      "row_count": 890,
+      "columns": [
+        {
+          "name": "id",
+          "type": "UUID",
+          "nullable": false,
+          "is_pk": true,
+          "is_fk": false
+        },
+        {
+          "name": "program_id",
+          "type": "UUID",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": true
+        },
+        {
+          "name": "subject_id",
+          "type": "UUID",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": true
+        },
+        {
+          "name": "source",
+          "type": "VARCHAR(30)",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "source_id",
+          "type": "VARCHAR(64)",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "display_id",
+          "type": "VARCHAR(128)",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "title",
+          "type": "TEXT",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "slug",
+          "type": "VARCHAR(512)",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "year",
+          "type": "INTEGER",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "exam_type",
+          "type": "VARCHAR(50)",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "total_questions",
+          "type": "INTEGER",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "duration_seconds",
+          "type": "INTEGER",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "challenge_time_seconds",
+          "type": "INTEGER",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "content_status",
+          "type": "VARCHAR(30)",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "status",
+          "type": "VARCHAR(30)",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "published_at",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "take_count",
+          "type": "INTEGER",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "like_count",
+          "type": "INTEGER",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "avg_score",
+          "type": "NUMERIC(5, 2)",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "avg_score_percent",
+          "type": "NUMERIC(5, 2)",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "meta_title",
+          "type": "VARCHAR(255)",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "meta_description",
+          "type": "VARCHAR(320)",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "canonical_url",
+          "type": "TEXT",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "pdf_url",
+          "type": "TEXT",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "solution_url",
+          "type": "TEXT",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "detail_imported_at",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "raw_payload",
+          "type": "JSONB",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "crawled_at",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "deleted_at",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "updated_at",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ]
+    },
+    "files": {
+      "schema": "public",
+      "row_count": 138,
+      "columns": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "nullable": false,
+          "is_pk": true,
+          "is_fk": false
+        },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "updated_at",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "deleted_at",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "provider",
+          "type": "VARCHAR(16)",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "key",
+          "type": "VARCHAR(512)",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "path",
+          "type": "VARCHAR(512)",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "url",
+          "type": "VARCHAR(1024)",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "original_name",
+          "type": "VARCHAR(255)",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "folder",
+          "type": "VARCHAR(64)",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "mimetype",
+          "type": "VARCHAR(128)",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "size",
+          "type": "BIGINT",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "uploaded_by",
+          "type": "INTEGER",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "model_type",
+          "type": "VARCHAR(100)",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "model_id",
+          "type": "VARCHAR(64)",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "collection",
+          "type": "VARCHAR(100)",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "alt",
+          "type": "TEXT",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "caption",
+          "type": "TEXT",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "width",
+          "type": "INTEGER",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "height",
+          "type": "INTEGER",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "sort_order",
+          "type": "INTEGER",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ]
+    },
+    "gallery_images": {
+      "schema": "public",
+      "row_count": 1203,
+      "columns": [
+        {
+          "name": "id",
+          "type": "UUID",
+          "nullable": false,
+          "is_pk": true,
+          "is_fk": false
+        },
+        {
+          "name": "university_id",
+          "type": "UUID",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": true
+        },
+        {
+          "name": "slot",
+          "type": "SMALLINT",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "category",
+          "type": "VARCHAR(50)",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "category_label",
+          "type": "VARCHAR(100)",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "public_url",
+          "type": "TEXT",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "storage_path",
+          "type": "TEXT",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "storage_bucket",
+          "type": "VARCHAR(100)",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "source_url",
+          "type": "TEXT",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "original_url",
+          "type": "TEXT",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "updated_at",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "deleted_at",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ]
+    },
+    "mail_logs": {
+      "schema": "public",
+      "row_count": 89,
+      "columns": [
+        {
+          "name": "id",
+          "type": "BIGINT",
+          "nullable": false,
+          "is_pk": true,
+          "is_fk": false
+        },
+        {
+          "name": "to_email",
+          "type": "VARCHAR(320)",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "subject",
+          "type": "VARCHAR(500)",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "status",
+          "type": "VARCHAR(7)",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "template_key",
+          "type": "VARCHAR(100)",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "error_message",
+          "type": "TEXT",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "message_id",
+          "type": "VARCHAR(500)",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "attempts",
+          "type": "INTEGER",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "body",
+          "type": "TEXT",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ]
+    },
+    "major_groups": {
+      "schema": "public",
+      "row_count": 35,
+      "columns": [
+        {
+          "name": "id",
+          "type": "VARCHAR(10)",
+          "nullable": false,
+          "is_pk": true,
+          "is_fk": false
+        },
+        {
+          "name": "name",
+          "type": "VARCHAR(255)",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "icon",
+          "type": "VARCHAR(50)",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ]
+    },
+    "major_sections": {
+      "schema": "public",
+      "row_count": 9639,
+      "columns": [
+        {
+          "name": "id",
+          "type": "UUID",
+          "nullable": false,
+          "is_pk": true,
+          "is_fk": false
+        },
+        {
+          "name": "base_major_code",
+          "type": "VARCHAR(20)",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "section_number",
+          "type": "SMALLINT",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "heading",
+          "type": "VARCHAR(255)",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "content",
+          "type": "TEXT",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "sort_order",
+          "type": "SMALLINT",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "updated_at",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "deleted_at",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ]
+    },
+    "migrations": {
+      "schema": "public",
+      "row_count": 48,
+      "columns": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "nullable": false,
+          "is_pk": true,
+          "is_fk": false
+        },
+        {
+          "name": "timestamp",
+          "type": "BIGINT",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "name",
+          "type": "VARCHAR",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ]
+    },
+    "onboarding_flow_nodes": {
+      "schema": "public",
+      "row_count": 14,
+      "columns": [
+        {
+          "name": "id",
+          "type": "UUID",
+          "nullable": false,
+          "is_pk": true,
+          "is_fk": false
+        },
+        {
+          "name": "flow_id",
+          "type": "UUID",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": true
+        },
+        {
+          "name": "node_kind",
+          "type": "VARCHAR(30)",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "label",
+          "type": "VARCHAR(255)",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "question_id",
+          "type": "UUID",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": true
+        },
+        {
+          "name": "band_difficulty",
+          "type": "VARCHAR(100)",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "on_correct_node_id",
+          "type": "UUID",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": true
+        },
+        {
+          "name": "on_wrong_node_id",
+          "type": "UUID",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": true
+        },
+        {
+          "name": "result_level",
+          "type": "VARCHAR(100)",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "result_label",
+          "type": "VARCHAR(255)",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "result_description",
+          "type": "TEXT",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "position_x",
+          "type": "INTEGER",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "position_y",
+          "type": "INTEGER",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "deleted_at",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "updated_at",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "pool_question_ids",
+          "type": "JSONB",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "band_program_id",
+          "type": "UUID",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": true
+        },
+        {
+          "name": "band_subject_id",
+          "type": "UUID",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": true
+        },
+        {
+          "name": "band_question_type",
+          "type": "VARCHAR(50)",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ]
+    },
+    "onboarding_flows": {
+      "schema": "public",
+      "row_count": 2,
+      "columns": [
+        {
+          "name": "id",
+          "type": "UUID",
+          "nullable": false,
+          "is_pk": true,
+          "is_fk": false
+        },
+        {
+          "name": "subject_id",
+          "type": "UUID",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": true
+        },
+        {
+          "name": "name",
+          "type": "VARCHAR(255)",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "description",
+          "type": "TEXT",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "root_node_id",
+          "type": "UUID",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": true
+        },
+        {
+          "name": "is_active",
+          "type": "BOOLEAN",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "deleted_at",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "updated_at",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ]
+    },
+    "organizations": {
+      "schema": "public",
+      "row_count": 4,
+      "columns": [
+        {
+          "name": "id",
+          "type": "UUID",
+          "nullable": false,
+          "is_pk": true,
+          "is_fk": false
+        },
+        {
+          "name": "name",
+          "type": "VARCHAR(255)",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "short_name",
+          "type": "VARCHAR(100)",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "slug",
+          "type": "VARCHAR(255)",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "description",
+          "type": "TEXT",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "website_url",
+          "type": "TEXT",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "deleted_at",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "updated_at",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ]
+    },
+    "program_admission_methods": {
+      "schema": "public",
+      "row_count": 23745,
+      "columns": [
+        {
+          "name": "program_id",
+          "type": "UUID",
+          "nullable": false,
+          "is_pk": true,
+          "is_fk": true
+        },
+        {
+          "name": "admission_method_id",
+          "type": "UUID",
+          "nullable": false,
+          "is_pk": true,
+          "is_fk": true
+        },
+        {
+          "name": "exam_blocks",
+          "type": "ARRAY",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        }
+      ],
+      "primary_keys": [
+        "program_id",
+        "admission_method_id"
+      ]
+    },
+    "program_admissions": {
+      "schema": "public",
+      "row_count": 31228,
+      "columns": [
+        {
+          "name": "id",
+          "type": "UUID",
+          "nullable": false,
+          "is_pk": true,
+          "is_fk": false
+        },
+        {
+          "name": "program_id",
+          "type": "UUID",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": true
+        },
+        {
+          "name": "method",
+          "type": "VARCHAR(50)",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "exam_blocks",
+          "type": "ARRAY",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "updated_at",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "deleted_at",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ]
+    },
+    "programs": {
+      "schema": "public",
+      "row_count": 6669,
+      "columns": [
+        {
+          "name": "id",
+          "type": "UUID",
+          "nullable": false,
+          "is_pk": true,
+          "is_fk": false
+        },
+        {
+          "name": "university_id",
+          "type": "UUID",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": true
+        },
+        {
+          "name": "major_code",
+          "type": "VARCHAR(50)",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "major_name",
+          "type": "VARCHAR(255)",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "program_type",
+          "type": "VARCHAR(20)",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "specialization",
+          "type": "VARCHAR(100)",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "major_group_id",
+          "type": "VARCHAR(10)",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": true
+        },
+        {
+          "name": "total_quota",
+          "type": "INTEGER",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "tuition_min",
+          "type": "INTEGER",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "tuition_max",
+          "type": "INTEGER",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "is_featured",
+          "type": "BOOLEAN",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "featured_reason",
+          "type": "TEXT",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "featured_confidence",
+          "type": "VARCHAR(10)",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "featured_source",
+          "type": "VARCHAR(100)",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "updated_at",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "deleted_at",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "official_link",
+          "type": "TEXT",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ]
+    },
+    "question_categories": {
+      "schema": "public",
+      "row_count": 713,
+      "columns": [
+        {
+          "name": "id",
+          "type": "UUID",
+          "nullable": false,
+          "is_pk": true,
+          "is_fk": false
+        },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "updated_at",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "deleted_at",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "topic_id",
+          "type": "UUID",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": true
+        },
+        {
+          "name": "name",
+          "type": "VARCHAR(500)",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "sort_order",
+          "type": "INTEGER",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ]
+    },
+    "question_chapters": {
+      "schema": "public",
+      "row_count": 109,
+      "columns": [
+        {
+          "name": "id",
+          "type": "UUID",
+          "nullable": false,
+          "is_pk": true,
+          "is_fk": false
+        },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "updated_at",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "deleted_at",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "subject_id",
+          "type": "UUID",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": true
+        },
+        {
+          "name": "name",
+          "type": "VARCHAR(500)",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "sort_order",
+          "type": "INTEGER",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ]
+    },
+    "question_difficulties": {
+      "schema": "public",
+      "row_count": 12,
+      "columns": [
+        {
+          "name": "id",
+          "type": "UUID",
+          "nullable": false,
+          "is_pk": true,
+          "is_fk": false
+        },
+        {
+          "name": "value",
+          "type": "VARCHAR(100)",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "label",
+          "type": "VARCHAR(255)",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "sort_order",
+          "type": "INTEGER",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "is_active",
+          "type": "BOOLEAN",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "deleted_at",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "updated_at",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ]
+    },
+    "question_grades": {
+      "schema": "public",
+      "row_count": 6,
+      "columns": [
+        {
+          "name": "id",
+          "type": "UUID",
+          "nullable": false,
+          "is_pk": true,
+          "is_fk": false
+        },
+        {
+          "name": "value",
+          "type": "VARCHAR(100)",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "label",
+          "type": "VARCHAR(255)",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "sort_order",
+          "type": "INTEGER",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "is_active",
+          "type": "BOOLEAN",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "deleted_at",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "updated_at",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ]
+    },
+    "question_groups": {
+      "schema": "public",
+      "row_count": 911,
+      "columns": [
+        {
+          "name": "id",
+          "type": "UUID",
+          "nullable": false,
+          "is_pk": true,
+          "is_fk": false
+        },
+        {
+          "name": "passage_content",
+          "type": "JSONB",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "passage_media_url",
+          "type": "TEXT",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "group_type",
+          "type": "VARCHAR(50)",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "deleted_at",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "updated_at",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ]
+    },
+    "question_options": {
+      "schema": "public",
+      "row_count": 115334,
+      "columns": [
+        {
+          "name": "id",
+          "type": "UUID",
+          "nullable": false,
+          "is_pk": true,
+          "is_fk": false
+        },
+        {
+          "name": "question_id",
+          "type": "UUID",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": true
+        },
+        {
+          "name": "option_label",
+          "type": "VARCHAR(10)",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "content",
+          "type": "JSONB",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "is_correct",
+          "type": "BOOLEAN",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "sort_order",
+          "type": "INTEGER",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "deleted_at",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "updated_at",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "explanation_content",
+          "type": "JSONB",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ]
+    },
+    "question_topics": {
+      "schema": "public",
+      "row_count": 316,
+      "columns": [
+        {
+          "name": "id",
+          "type": "UUID",
+          "nullable": false,
+          "is_pk": true,
+          "is_fk": false
+        },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "updated_at",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "deleted_at",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "chapter_id",
+          "type": "UUID",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": true
+        },
+        {
+          "name": "name",
+          "type": "VARCHAR(500)",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "sort_order",
+          "type": "INTEGER",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ]
+    },
+    "questions": {
+      "schema": "public",
+      "row_count": 33126,
+      "columns": [
+        {
+          "name": "id",
+          "type": "UUID",
+          "nullable": false,
+          "is_pk": true,
+          "is_fk": false
+        },
+        {
+          "name": "subject_id",
+          "type": "UUID",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": true
+        },
+        {
+          "name": "group_id",
+          "type": "UUID",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": true
+        },
+        {
+          "name": "source_question_key",
+          "type": "VARCHAR(64)",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "question_type",
+          "type": "VARCHAR(50)",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "grade",
+          "type": "TEXT",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "difficulty",
+          "type": "TEXT",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "chapter",
+          "type": "TEXT",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "topic",
+          "type": "TEXT",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "question_category",
+          "type": "TEXT",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "requirement_content",
+          "type": "JSONB",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "explanation_content",
+          "type": "JSONB",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "correct_answer",
+          "type": "JSONB",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "raw_payload",
+          "type": "JSONB",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "search_text",
+          "type": "TEXT",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "search_vector",
+          "type": "TSVECTOR",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "deleted_at",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "updated_at",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "chapter_id",
+          "type": "UUID",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": true
+        },
+        {
+          "name": "topic_id",
+          "type": "UUID",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": true
+        },
+        {
+          "name": "category_id",
+          "type": "UUID",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": true
+        },
+        {
+          "name": "is_verified",
+          "type": "BOOLEAN",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ]
+    },
+    "sessions": {
+      "schema": "public",
+      "row_count": 30,
+      "columns": [
+        {
+          "name": "id",
+          "type": "UUID",
+          "nullable": false,
+          "is_pk": true,
+          "is_fk": false
+        },
+        {
+          "name": "user_id",
+          "type": "INTEGER",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "refresh_token_hash",
+          "type": "VARCHAR",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "device_name",
+          "type": "VARCHAR(200)",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "ip_address",
+          "type": "VARCHAR(50)",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "last_used_at",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "expires_at",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "hostname",
+          "type": "VARCHAR(255)",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ]
+    },
+    "site_settings": {
+      "schema": "public",
+      "row_count": 70,
+      "columns": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "nullable": false,
+          "is_pk": true,
+          "is_fk": false
+        },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "updated_at",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "deleted_at",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "key",
+          "type": "VARCHAR(100)",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "value",
+          "type": "JSONB",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "group",
+          "type": "VARCHAR(50)",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "label",
+          "type": "VARCHAR(200)",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "type",
+          "type": "VARCHAR(30)",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "is_public",
+          "type": "BOOLEAN",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "sort_order",
+          "type": "INTEGER",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ]
+    },
+    "subject_programs": {
+      "schema": "public",
+      "row_count": 23,
+      "columns": [
+        {
+          "name": "subject_id",
+          "type": "UUID",
+          "nullable": false,
+          "is_pk": true,
+          "is_fk": true
+        },
+        {
+          "name": "program_id",
+          "type": "UUID",
+          "nullable": false,
+          "is_pk": true,
+          "is_fk": true
+        }
+      ],
+      "primary_keys": [
+        "subject_id",
+        "program_id"
+      ]
+    },
+    "subjects": {
+      "schema": "public",
+      "row_count": 21,
+      "columns": [
+        {
+          "name": "id",
+          "type": "UUID",
+          "nullable": false,
+          "is_pk": true,
+          "is_fk": false
+        },
+        {
+          "name": "name",
+          "type": "VARCHAR(255)",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "short_name",
+          "type": "VARCHAR(100)",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "slug",
+          "type": "VARCHAR(255)",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "description",
+          "type": "TEXT",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "sort_order",
+          "type": "INTEGER",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "deleted_at",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "updated_at",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ]
+    },
+    "telegram_templates": {
+      "schema": "public",
+      "row_count": 1,
+      "columns": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "nullable": false,
+          "is_pk": true,
+          "is_fk": false
+        },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "updated_at",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "deleted_at",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "key",
+          "type": "VARCHAR(100)",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "name",
+          "type": "VARCHAR(200)",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "content",
+          "type": "TEXT",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "description",
+          "type": "TEXT",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "variables",
+          "type": "TEXT",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ]
+    },
+    "universities": {
+      "schema": "public",
+      "row_count": 287,
+      "columns": [
+        {
+          "name": "id",
+          "type": "UUID",
+          "nullable": false,
+          "is_pk": true,
+          "is_fk": false
+        },
+        {
+          "name": "university_code",
+          "type": "VARCHAR(10)",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "name",
+          "type": "VARCHAR(255)",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "short_name",
+          "type": "VARCHAR(100)",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "province",
+          "type": "VARCHAR(100)",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "type",
+          "type": "VARCHAR(20)",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "website",
+          "type": "TEXT",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "logo_url",
+          "type": "TEXT",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "credits_per_year",
+          "type": "SMALLINT",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "campus_count",
+          "type": "SMALLINT",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "featured_major",
+          "type": "VARCHAR(255)",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "dean_year",
+          "type": "SMALLINT",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "de_an_year",
+          "type": "SMALLINT",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "de_an_source_url",
+          "type": "TEXT",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "de_an_official_pdf",
+          "type": "TEXT",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "de_an_source_type",
+          "type": "VARCHAR(20)",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "de_an_audit_level",
+          "type": "VARCHAR(50)",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "de_an_updated_at",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "overview_text",
+          "type": "TEXT",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "campus_text",
+          "type": "TEXT",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "student_note_heading",
+          "type": "TEXT",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "student_note_text",
+          "type": "TEXT",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "facts",
+          "type": "JSONB",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "tuition_status",
+          "type": "VARCHAR(20)",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "updated_at",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "deleted_at",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "tuition_text",
+          "type": "TEXT",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ]
+    },
+    "user_streaks": {
+      "schema": "public",
+      "row_count": 0,
+      "columns": [
+        {
+          "name": "user_id",
+          "type": "INTEGER",
+          "nullable": false,
+          "is_pk": true,
+          "is_fk": false
+        },
+        {
+          "name": "freeze_available",
+          "type": "INTEGER",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "freeze_used_dates",
+          "type": "JSONB",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "freeze_last_earned_streak",
+          "type": "INTEGER",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "updated_at",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        }
+      ],
+      "primary_keys": [
+        "user_id"
+      ]
+    },
+    "users": {
+      "schema": "public",
+      "row_count": 33,
+      "columns": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "nullable": false,
+          "is_pk": true,
+          "is_fk": false
+        },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "updated_at",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "deleted_at",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "name",
+          "type": "VARCHAR(150)",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "email",
+          "type": "VARCHAR(150)",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "phone",
+          "type": "VARCHAR(20)",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "password_hash",
+          "type": "VARCHAR",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "role",
+          "type": "VARCHAR(11)",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "status",
+          "type": "VARCHAR(8)",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "avatar",
+          "type": "VARCHAR",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "address",
+          "type": "VARCHAR(255)",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "bio",
+          "type": "TEXT",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "receive_marketing",
+          "type": "BOOLEAN",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "refresh_token_hash",
+          "type": "VARCHAR",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "reset_token_hash",
+          "type": "VARCHAR",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "reset_token_expiry",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "google_id",
+          "type": "VARCHAR",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "failed_login_attempts",
+          "type": "INTEGER",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "locked_until",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "email_verified",
+          "type": "BOOLEAN",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "email_verify_token",
+          "type": "VARCHAR",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "email_verify_token_expiry",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ]
+    },
+    "webhook_events": {
+      "schema": "public",
+      "row_count": 0,
+      "columns": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "nullable": false,
+          "is_pk": true,
+          "is_fk": false
+        },
+        {
+          "name": "webhookId",
+          "type": "INTEGER",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": true
+        },
+        {
+          "name": "event",
+          "type": "VARCHAR(50)",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "payload",
+          "type": "JSONB",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "delivered",
+          "type": "BOOLEAN",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "statusCode",
+          "type": "INTEGER",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "responseBody",
+          "type": "TEXT",
+          "nullable": true,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "createdAt",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ]
+    },
+    "webhooks": {
+      "schema": "public",
+      "row_count": 0,
+      "columns": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "nullable": false,
+          "is_pk": true,
+          "is_fk": false
+        },
+        {
+          "name": "url",
+          "type": "VARCHAR(255)",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "secret",
+          "type": "VARCHAR(50)",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "events",
+          "type": "TEXT",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "isActive",
+          "type": "BOOLEAN",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "createdAt",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        },
+        {
+          "name": "updatedAt",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "is_pk": false,
+          "is_fk": false
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ]
+    }
+  },
+  "relationships": [
+    {
+      "from_table": "public.admission_methods",
+      "from_column": "university_id",
+      "to_table": "public.universities",
+      "to_column": "id"
+    },
+    {
+      "from_table": "public.admission_scores",
+      "from_column": "program_admission_id",
+      "to_table": "public.program_admissions",
+      "to_column": "id"
+    },
+    {
+      "from_table": "public.attempt_answers",
+      "from_column": "attempt_id",
+      "to_table": "public.exam_attempts",
+      "to_column": "id"
+    },
+    {
+      "from_table": "public.attempt_answers",
+      "from_column": "exam_question_id",
+      "to_table": "public.exam_questions",
+      "to_column": "id"
+    },
+    {
+      "from_table": "public.de_an_sections",
+      "from_column": "university_id",
+      "to_table": "public.universities",
+      "to_column": "id"
+    },
+    {
+      "from_table": "public.exam_attempts",
+      "from_column": "user_id",
+      "to_table": "public.users",
+      "to_column": "id"
+    },
+    {
+      "from_table": "public.exam_attempts",
+      "from_column": "exam_id",
+      "to_table": "public.exams",
+      "to_column": "id"
+    },
+    {
+      "from_table": "public.exam_block_subjects",
+      "from_column": "exam_block_id",
+      "to_table": "public.exam_blocks",
+      "to_column": "id"
+    },
+    {
+      "from_table": "public.exam_block_subjects",
+      "from_column": "subject_id",
+      "to_table": "public.subjects",
+      "to_column": "id"
+    },
+    {
+      "from_table": "public.exam_block_subjects",
+      "from_column": "flow_id",
+      "to_table": "public.onboarding_flows",
+      "to_column": "id"
+    },
+    {
+      "from_table": "public.exam_block_subjects",
+      "from_column": "program_id",
+      "to_table": "public.exam_programs",
+      "to_column": "id"
+    },
+    {
+      "from_table": "public.exam_programs",
+      "from_column": "organization_id",
+      "to_table": "public.organizations",
+      "to_column": "id"
+    },
+    {
+      "from_table": "public.exam_questions",
+      "from_column": "exam_id",
+      "to_table": "public.exams",
+      "to_column": "id"
+    },
+    {
+      "from_table": "public.exam_questions",
+      "from_column": "section_id",
+      "to_table": "public.exam_sections",
+      "to_column": "id"
+    },
+    {
+      "from_table": "public.exam_questions",
+      "from_column": "question_id",
+      "to_table": "public.questions",
+      "to_column": "id"
+    },
+    {
+      "from_table": "public.exam_sections",
+      "from_column": "exam_id",
+      "to_table": "public.exams",
+      "to_column": "id"
+    },
+    {
+      "from_table": "public.exams",
+      "from_column": "program_id",
+      "to_table": "public.exam_programs",
+      "to_column": "id"
+    },
+    {
+      "from_table": "public.exams",
+      "from_column": "subject_id",
+      "to_table": "public.subjects",
+      "to_column": "id"
+    },
+    {
+      "from_table": "public.gallery_images",
+      "from_column": "university_id",
+      "to_table": "public.universities",
+      "to_column": "id"
+    },
+    {
+      "from_table": "public.onboarding_flow_nodes",
+      "from_column": "flow_id",
+      "to_table": "public.onboarding_flows",
+      "to_column": "id"
+    },
+    {
+      "from_table": "public.onboarding_flow_nodes",
+      "from_column": "question_id",
+      "to_table": "public.questions",
+      "to_column": "id"
+    },
+    {
+      "from_table": "public.onboarding_flow_nodes",
+      "from_column": "on_correct_node_id",
+      "to_table": "public.onboarding_flow_nodes",
+      "to_column": "id"
+    },
+    {
+      "from_table": "public.onboarding_flow_nodes",
+      "from_column": "on_wrong_node_id",
+      "to_table": "public.onboarding_flow_nodes",
+      "to_column": "id"
+    },
+    {
+      "from_table": "public.onboarding_flow_nodes",
+      "from_column": "band_program_id",
+      "to_table": "public.exam_programs",
+      "to_column": "id"
+    },
+    {
+      "from_table": "public.onboarding_flow_nodes",
+      "from_column": "band_subject_id",
+      "to_table": "public.subjects",
+      "to_column": "id"
+    },
+    {
+      "from_table": "public.onboarding_flows",
+      "from_column": "subject_id",
+      "to_table": "public.subjects",
+      "to_column": "id"
+    },
+    {
+      "from_table": "public.onboarding_flows",
+      "from_column": "root_node_id",
+      "to_table": "public.onboarding_flow_nodes",
+      "to_column": "id"
+    },
+    {
+      "from_table": "public.program_admission_methods",
+      "from_column": "program_id",
+      "to_table": "public.programs",
+      "to_column": "id"
+    },
+    {
+      "from_table": "public.program_admission_methods",
+      "from_column": "admission_method_id",
+      "to_table": "public.admission_methods",
+      "to_column": "id"
+    },
+    {
+      "from_table": "public.program_admissions",
+      "from_column": "program_id",
+      "to_table": "public.programs",
+      "to_column": "id"
+    },
+    {
+      "from_table": "public.programs",
+      "from_column": "university_id",
+      "to_table": "public.universities",
+      "to_column": "id"
+    },
+    {
+      "from_table": "public.programs",
+      "from_column": "major_group_id",
+      "to_table": "public.major_groups",
+      "to_column": "id"
+    },
+    {
+      "from_table": "public.question_categories",
+      "from_column": "topic_id",
+      "to_table": "public.question_topics",
+      "to_column": "id"
+    },
+    {
+      "from_table": "public.question_chapters",
+      "from_column": "subject_id",
+      "to_table": "public.subjects",
+      "to_column": "id"
+    },
+    {
+      "from_table": "public.question_options",
+      "from_column": "question_id",
+      "to_table": "public.questions",
+      "to_column": "id"
+    },
+    {
+      "from_table": "public.question_topics",
+      "from_column": "chapter_id",
+      "to_table": "public.question_chapters",
+      "to_column": "id"
+    },
+    {
+      "from_table": "public.questions",
+      "from_column": "subject_id",
+      "to_table": "public.subjects",
+      "to_column": "id"
+    },
+    {
+      "from_table": "public.questions",
+      "from_column": "group_id",
+      "to_table": "public.question_groups",
+      "to_column": "id"
+    },
+    {
+      "from_table": "public.questions",
+      "from_column": "chapter_id",
+      "to_table": "public.question_chapters",
+      "to_column": "id"
+    },
+    {
+      "from_table": "public.questions",
+      "from_column": "topic_id",
+      "to_table": "public.question_topics",
+      "to_column": "id"
+    },
+    {
+      "from_table": "public.questions",
+      "from_column": "category_id",
+      "to_table": "public.question_categories",
+      "to_column": "id"
+    },
+    {
+      "from_table": "public.subject_programs",
+      "from_column": "subject_id",
+      "to_table": "public.subjects",
+      "to_column": "id"
+    },
+    {
+      "from_table": "public.subject_programs",
+      "from_column": "program_id",
+      "to_table": "public.exam_programs",
+      "to_column": "id"
+    },
+    {
+      "from_table": "public.webhook_events",
+      "from_column": "webhookId",
+      "to_table": "public.webhooks",
+      "to_column": "id"
+    }
+  ]
+}

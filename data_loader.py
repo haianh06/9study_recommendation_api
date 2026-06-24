@@ -157,7 +157,7 @@ class DataLoader:
 
         # ── Compute latest THPT score per program ──
         thpt_scores = scores[
-            (scores["method"].isin(["thpt", "hoc_ba", "xthb", "xt_hb"])) &
+            (scores["method"].isin(["thpt", "diem_thi_thpt", "hoc_ba", "xthb", "xt_hb"])) &
             (scores["score"].notna()) &
             (scores["score"] > 0) &
             (scores["score"] <= 30) &
@@ -180,9 +180,8 @@ class DataLoader:
                 latest_score_year=("latest_year", "first")
             ).reset_index()
 
-            catalog = catalog.merge(latest_score_agg, left_on="id", right_on="program_id",
-                                     how="left", suffixes=("", "_score"))
-            catalog.drop(columns=["program_id_score"], errors="ignore", inplace=True)
+            catalog = catalog.merge(latest_score_agg, left_on="id", right_on="program_id", how="left")
+            catalog.drop(columns=["program_id"], errors="ignore", inplace=True)
         else:
             catalog["latest_score_thpt"] = np.nan
             catalog["latest_score_year"] = np.nan
@@ -208,9 +207,8 @@ class DataLoader:
             
             trends = yearly.groupby("program_id").apply(compute_trend, include_groups=False).reset_index()
             trends.columns = ["program_id", "score_trend"]
-            catalog = catalog.merge(trends, left_on="id", right_on="program_id",
-                                     how="left", suffixes=("", "_trend"))
-            catalog.drop(columns=["program_id_trend"], errors="ignore", inplace=True)
+            catalog = catalog.merge(trends, left_on="id", right_on="program_id", how="left")
+            catalog.drop(columns=["program_id"], errors="ignore", inplace=True)
         else:
             catalog["score_trend"] = "unknown"
 
@@ -220,9 +218,8 @@ class DataLoader:
             exam_blocks_raw=("exam_blocks", "first")
         ).reset_index()
         
-        catalog = catalog.merge(method_agg, left_on="id", right_on="program_id",
-                                 how="left", suffixes=("", "_adm"))
-        catalog.drop(columns=["program_id_adm"], errors="ignore", inplace=True)
+        catalog = catalog.merge(method_agg, left_on="id", right_on="program_id", how="left")
+        catalog.drop(columns=["program_id"], errors="ignore", inplace=True)
 
         # Parse exam_blocks from JSONB
         def parse_exam_blocks(raw):

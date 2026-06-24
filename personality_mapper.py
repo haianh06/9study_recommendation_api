@@ -6,6 +6,7 @@ to solve the Cold-Start problem when users don't know what to study.
 """
 
 from typing import List, Dict, Tuple
+from datetime import datetime
 
 # Full list of major groups from the database
 MAJOR_GROUPS = [
@@ -118,6 +119,54 @@ NUMEROLOGY_MAP = {
     22: ["Xây dựng - Kiến trúc - Đô thị", "Khoa học máy tính - Kỹ thuật phần mềm", "Kinh tế - Quản trị kinh doanh", "Công nghệ sinh học"],
     33: ["Sư phạm", "Y - Dược", "Tâm lý học - Công tác xã hội", "Nghệ thuật - Thiết kế - Âm nhạc"]
 }
+
+ZODIAC_MAP = {
+    "Aries": ["Quân sự - Công an", "Kinh tế - Quản trị kinh doanh", "Thể dục - Thể thao", "Kỹ thuật ô tô - Cơ khí"],
+    "Taurus": ["Kế toán - Kiểm toán", "Tài chính - Ngân hàng", "Nông nghiệp - Bảo vệ thực vật", "Nghệ thuật - Thiết kế - Âm nhạc"],
+    "Gemini": ["Ngôn ngữ - Ngoại ngữ", "Marketing - Quan hệ công chúng", "Công nghệ thông tin - Truyền thông", "Du lịch - Khách sạn - Nhà hàng"],
+    "Cancer": ["Y - Dược", "Tâm lý học - Công tác xã hội", "Sư phạm", "Quản lý nhà nước - Nhân lực"],
+    "Leo": ["Kinh tế - Quản trị kinh doanh", "Nghệ thuật - Thiết kế - Âm nhạc", "Du lịch - Khách sạn - Nhà hàng", "Luật - Pháp lý"],
+    "Virgo": ["Khoa học máy tính - Kỹ thuật phần mềm", "Kế toán - Kiểm toán", "Y - Dược", "Toán - Thống kê ứng dụng"],
+    "Libra": ["Luật - Pháp lý", "Nghệ thuật - Thiết kế - Âm nhạc", "Marketing - Quan hệ công chúng", "Văn học - Khoa học xã hội"],
+    "Scorpio": ["Tâm lý học - Công tác xã hội", "Y - Dược", "Khoa học tự nhiên - Vật lý - Hóa học", "Kinh doanh quốc tế"],
+    "Sagittarius": ["Du lịch - Khách sạn - Nhà hàng", "Ngôn ngữ - Ngoại ngữ", "Sư phạm", "Kinh doanh quốc tế"],
+    "Capricorn": ["Tài chính - Ngân hàng", "Xây dựng - Kiến trúc - Đô thị", "Quản lý nhà nước - Nhân lực", "Kế toán - Kiểm toán"],
+    "Aquarius": ["Công nghệ thông tin - Truyền thông", "Khoa học máy tính - Kỹ thuật phần mềm", "Điện - Điện tử - Tự động hóa", "Khoa học tự nhiên - Vật lý - Hóa học"],
+    "Pisces": ["Nghệ thuật - Thiết kế - Âm nhạc", "Tâm lý học - Công tác xã hội", "Y - Dược", "Văn học - Khoa học xã hội"]
+}
+
+def calculate_numerology(dob_str: str) -> int:
+    """Calculate Life Path Number from DOB (YYYY-MM-DD)."""
+    try:
+        digits = [int(d) for d in dob_str if d.isdigit()]
+        if not digits: return 0
+        total = sum(digits)
+        while total > 9 and total not in (11, 22, 33):
+            total = sum(int(d) for d in str(total))
+        return total
+    except Exception:
+        return 0
+
+def get_zodiac_sign(dob_str: str) -> str:
+    """Get Zodiac Sign from DOB (YYYY-MM-DD)."""
+    try:
+        dt = datetime.strptime(dob_str, "%Y-%m-%d")
+        month, day = dt.month, dt.day
+        if (month == 3 and day >= 21) or (month == 4 and day <= 19): return "Aries"
+        elif (month == 4 and day >= 20) or (month == 5 and day <= 20): return "Taurus"
+        elif (month == 5 and day >= 21) or (month == 6 and day <= 20): return "Gemini"
+        elif (month == 6 and day >= 21) or (month == 7 and day <= 22): return "Cancer"
+        elif (month == 7 and day >= 23) or (month == 8 and day <= 22): return "Leo"
+        elif (month == 8 and day >= 23) or (month == 9 and day <= 22): return "Virgo"
+        elif (month == 9 and day >= 23) or (month == 10 and day <= 22): return "Libra"
+        elif (month == 10 and day >= 23) or (month == 11 and day <= 21): return "Scorpio"
+        elif (month == 11 and day >= 22) or (month == 12 and day <= 21): return "Sagittarius"
+        elif (month == 12 and day >= 22) or (month == 1 and day <= 19): return "Capricorn"
+        elif (month == 1 and day >= 20) or (month == 2 and day <= 18): return "Aquarius"
+        elif (month == 2 and day >= 19) or (month == 3 and day <= 20): return "Pisces"
+    except Exception:
+        pass
+    return ""
 
 def get_recommendations_from_numerology(number: int) -> Tuple[List[str], List[str]]:
     """Get major groups for a Numerology number."""

@@ -1,0 +1,84 @@
+{
+  "flow_type": "mock_exam",
+  "exam_block": ["A00", "A01"],
+  "total_score": 26.5,
+  "current_score": 24.0,
+  "dob": "2006-05-12",
+  "aspirations": [
+    {
+      "university_code": "BKA",
+      "major_name": "Khoa học Máy tính"
+    },
+    {
+      "university_code": "QGH",
+      "major_name": "Công nghệ thông tin"
+    },
+    {
+      "university_code": "FPT",
+      "major_name": "Kỹ thuật phần mềm"
+    }
+  ],
+  "top_k": 10,
+  "score_margin": 3.0
+}
+
+{
+  "flow_type": "discovery",
+  "exam_block": ["D01"],
+  "total_score": 25.0,
+  "province": "TP.HCM",
+  "dob": "2006-10-20",
+  "aspirations": [
+    {
+      "university_code": "UEH",
+      "major_name": "Kinh doanh quốc tế"
+    },
+    {
+      "university_code": "FTU",
+      "major_name": "Quản trị kinh doanh"
+    },
+    {
+      "university_code": "VNU",
+      "major_name": "Ngôn ngữ Anh"
+    }
+  ],
+  "top_k": 10,
+  "score_margin": 3.0
+}
+
+{
+  "flow_type": "discovery",
+  "exam_block": ["B00"],
+  "total_score": 27.5,
+  "province": "Đà Nẵng",
+  "dob": "2006-02-14",
+  "holland_code": "SIA",
+  "aspirations": [
+    {
+      "university_code": "YDS",
+      "major_name": "Y khoa"
+    },
+    {
+      "university_code": "YHN",
+      "major_name": "Răng - Hàm - Mặt"
+    },
+    {
+      "university_code": "VNU",
+      "major_name": "Tâm lý học"
+    }
+  ],
+  "top_k": 10,
+  "score_margin": 3.0
+}
+
+{
+  "flow_type": "mock_exam",
+  "exam_block": ["A01"],
+  "total_score": 22.0,
+  "current_score": 20.5,
+  "province": "Hải Phòng",
+  "dob": "2006-12-05",
+  "aspirations": [],
+  "top_k": 15,
+  "score_margin": 4.0
+}

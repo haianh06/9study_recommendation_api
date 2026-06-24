@@ -15,6 +15,7 @@ Output: Ranked list of (program, score, explanations) + Top Majors Match
 import numpy as np
 import pandas as pd
 import json
+import os
 from typing import Dict, List, Optional, Tuple, Any
 from dataclasses import dataclass, field
 from personality_mapper import HOLLAND_MAP, NUMEROLOGY_MAP
@@ -30,16 +31,17 @@ class UserProfile:
     province: str                     # Tỉnh/TP hiện tại
     
     # Aspirations & Personality (Blended Recommendation)
+    flow_type: str = "mock_exam" # "mock_exam" or "discovery"
     aspirations: List[Dict[str, str]] = field(default_factory=list) # e.g. [{"university_code": "BKA", "major_name": "Công nghệ thông tin"}]
     holland_code: Optional[str] = None
     numerology: Optional[int] = None
+    zodiac: Optional[str] = None
     
     # Level 2 (Recommended)
-    subject_scores: Dict[str, float] = field(default_factory=dict)   # {"Toán": 8.5, "Lý": 7.0}
-    budget_max: Optional[float] = None          # VND/năm
-    program_type: Optional[str] = None          # "Đại trà", "Chất lượng cao", etc.
-    preferred_provinces: List[str] = field(default_factory=list)     # Tỉnh/TP muốn học
-    university_type: Optional[str] = None       # "Công lập", "Dân lập"
+    current_score: Optional[float] = None            # Điểm trung bình hiện tại
+    subject_scores: Dict[str, float] = field(default_factory=dict)
+    program_type: Optional[str] = None               # 'Đại trà', 'Chất lượng cao'
+    university_type: Optional[str] = None            # 'Công lập', 'Dân lập'
     
     # Level 3 (Optional)
     interest_keywords: List[str] = field(default_factory=list)       # ["công nghệ", "kinh doanh"]
@@ -57,10 +59,8 @@ class RecommendationEngine:
 
     # Default weights for scoring (expert-defined, tunable)
     DEFAULT_WEIGHTS = {
-        "score_match": 0.30,       # How well user's score matches admission score
-        "location_match": 0.15,    # Geographic preference
-        "interest_match": 0.20,    # Major group / keyword match
-        "budget_match": 0.10,      # Tuition affordability
+        "score_match": 0.45,       # How well user's score matches admission score
+        "interest_match": 0.30,    # Major group / keyword match
         "quota_factor": 0.05,      # Higher quota = easier admission
         "prestige_score": 0.10,    # University popularity/prestige proxy
         "trend_bonus": 0.10,       # Score trend (stable/down = slightly easier)
@@ -74,7 +74,27 @@ class RecommendationEngine:
         """
         self.catalog = catalog.copy()
         self.weights = weights or self.DEFAULT_WEIGHTS.copy()
+        
+        # Load flow weights for major matching
+        self.flow_weights = self._load_flow_weights()
+        
         self._preprocess_catalog()
+
+    def _load_flow_weights(self):
+        try:
+            weights_path = os.path.join(os.path.dirname(__file__), "weights.json")
+            if os.path.exists(weights_path):
+                with open(weights_path, "r", encoding="utf-8") as f:
+                    return json.load(f)
+        except Exception as e:
+            print(f"Error loading weights.json: {e}")
+            
+        # Default fallback if file is missing/invalid
+        return {
+            "mock_exam": {"interest": 0.40, "numerology": 0.30, "zodiac": 0.30},
+            "discovery_no_holland": {"interest": 0.40, "numerology": 0.30, "zodiac": 0.30},
+            "discovery_holland": {"interest": 0.55, "holland": 0.15, "numerology": 0.15, "zodiac": 0.15}
+        }
 
     def _preprocess_catalog(self):
         """Pre-compute values needed for scoring."""
@@ -110,13 +130,15 @@ class RecommendationEngine:
     def _calculate_major_match_percent(self, user: UserProfile, group_name: str) -> float:
         """
         Calculate dynamic match percentage for a major group
-        based on Holland (50%), Numerology (30%), Explicit Interest (20%).
+        based on Holland, Numerology, Zodiac, and Explicit Interest.
         """
         has_holland = bool(user.holland_code)
         has_num = bool(user.numerology)
+        has_zodiac = bool(user.zodiac)
         
         holland_score = 0.0
         num_score = 0.0
+        zodiac_score = 0.0
         interest_score = 0.0
         
         # Holland Match
@@ -132,7 +154,13 @@ class RecommendationEngine:
             if user.numerology in NUMEROLOGY_MAP and group_name in NUMEROLOGY_MAP[user.numerology]:
                 num_score = 1.0
                 
-        # Interest Match (Explicit)
+        # Zodiac Match (requires ZODIAC_MAP from personality_mapper, which we need to import)
+        from personality_mapper import ZODIAC_MAP
+        if has_zodiac:
+            if user.zodiac in ZODIAC_MAP and group_name in ZODIAC_MAP[user.zodiac]:
+                zodiac_score = 1.0
+                
+        # Interest Match (Explicit) - using existing data/interest
         if group_name in user.major_group_names:
             interest_score = 1.0
             
@@ -141,13 +169,31 @@ class RecommendationEngine:
             if asp.get("major_name") and str(asp.get("major_name")).lower() in group_name.lower():
                 interest_score = 1.0
             
-        # Dynamic Weighting
-        if has_holland:
-            final_score = (holland_score * 0.5) + (num_score * 0.3) + (interest_score * 0.2)
-        elif has_num:
-            final_score = (num_score * 0.5) + (interest_score * 0.5)
+        # Determine which weight config to use
+        if user.flow_type == "discovery":
+            if has_holland:
+                w_config = self.flow_weights.get("discovery_holland", {})
+                final_score = (
+                    holland_score * w_config.get("holland", 0.15) +
+                    num_score * w_config.get("numerology", 0.15) +
+                    zodiac_score * w_config.get("zodiac", 0.15) +
+                    interest_score * w_config.get("interest", 0.55)
+                )
+            else:
+                w_config = self.flow_weights.get("discovery_no_holland", {})
+                final_score = (
+                    num_score * w_config.get("numerology", 0.3) +
+                    zodiac_score * w_config.get("zodiac", 0.3) +
+                    interest_score * w_config.get("interest", 0.4)
+                )
         else:
-            final_score = interest_score
+            # flow_type = mock_exam
+            w_config = self.flow_weights.get("mock_exam", {})
+            final_score = (
+                num_score * w_config.get("numerology", 0.3) +
+                zodiac_score * w_config.get("zodiac", 0.3) +
+                interest_score * w_config.get("interest", 0.4)
+            )
             
         return min(final_score, 1.0)
 
@@ -208,37 +254,6 @@ class RecommendationEngine:
             return base * 0.9
 
     @staticmethod
-    def _location_match(user_province: str, uni_province: Optional[str],
-                         preferred_provinces: List[str]) -> float:
-        if uni_province is None or (isinstance(uni_province, float) and np.isnan(uni_province)):
-            return 0.3
-        uni_prov_lower = str(uni_province).lower().strip()
-        user_prov_lower = user_province.lower().strip()
-        
-        if uni_prov_lower == user_prov_lower:
-            return 1.0
-        for pref in preferred_provinces:
-            if pref.lower().strip() == uni_prov_lower:
-                return 0.75
-        major_cities = ["hà nội", "tp.hcm", "đà nẵng", "hải phòng", "cần thơ"]
-        if uni_prov_lower in major_cities:
-            return 0.4
-        return 0.2
-
-    @staticmethod
-    def _budget_match(user_budget_max: Optional[float], tuition_min: Optional[float]) -> float:
-        if user_budget_max is None:
-            return 0.7
-        if tuition_min is None or np.isnan(tuition_min):
-            return 0.5
-        if tuition_min <= 0:
-            return 0.7
-        if tuition_min <= user_budget_max:
-            return 1.0
-        else:
-            over_ratio = (tuition_min - user_budget_max) / user_budget_max
-            return max(0.0, 1.0 - over_ratio * 2)
-
     def _interest_match(self, user: UserProfile, search_text: str, major_group_name: Optional[str]) -> float:
         score = 0.0
         count = 0
@@ -280,9 +295,10 @@ class RecommendationEngine:
         df = filtered_df.copy()
         w = self.weights
 
-        df["_score_match"] = df["latest_score_thpt"].apply(lambda x: self._score_match(user.total_score, x))
-        df["_location_match"] = df.apply(lambda row: self._location_match(user.province, row.get("province"), user.preferred_provinces), axis=1)
-        df["_budget_match"] = df["tuition_min"].apply(lambda x: self._budget_match(user.budget_max, x))
+        # Use current_score if available, otherwise total_score
+        effective_score = user.current_score if user.current_score is not None else user.total_score
+
+        df["_score_match"] = df["latest_score_thpt"].apply(lambda x: self._score_match(effective_score, x))
         df["_interest_match"] = df.apply(lambda row: self._interest_match(user, row.get("_search_text", ""), row.get("major_group_name")), axis=1)
         df["_quota_factor"] = df["total_quota"].apply(self._quota_factor)
         df["_prestige_score"] = df.apply(self._prestige_score, axis=1)
@@ -290,9 +306,7 @@ class RecommendationEngine:
 
         df["recommendation_score"] = (
             w["score_match"]    * df["_score_match"] +
-            w["location_match"] * df["_location_match"] +
             w["interest_match"] * df["_interest_match"] +
-            w["budget_match"]   * df["_budget_match"] +
             w["quota_factor"]   * df["_quota_factor"] +
             w["prestige_score"] * df["_prestige_score"] +
             w["trend_bonus"]    * df["_trend_bonus"]
@@ -367,6 +381,36 @@ class RecommendationEngine:
         
         # Sort and take top 10
         top_majors = sorted(top_majors, key=lambda x: x["match_percentage"], reverse=True)[:10]
+
+        # 1.5. Compute Aspiration Matches explicitly
+        aspiration_matches = []
+        if len(user.aspirations) > 0:
+            for asp in user.aspirations:
+                # Find matching major groups for this aspiration
+                asp_major = str(asp.get("major_name", "")).lower()
+                matched_groups = [g for g in all_groups if asp_major in g.lower()]
+                # If no direct match by name, fallback to interest matching logic or just compute against all and take max
+                if not matched_groups and asp_major:
+                    # simplistic fallback: compute against all and take max, but we assign the major_name directly
+                    pass
+                
+                best_score = 0
+                best_group = "Không xác định"
+                for g in (matched_groups if matched_groups else all_groups):
+                    score = self._calculate_major_match_percent(user, g)
+                    # boost if it's explicitly matched
+                    if asp_major in g.lower():
+                        score = min(1.0, score + 0.2)
+                    if score > best_score:
+                        best_score = score
+                        best_group = g
+                
+                aspiration_matches.append({
+                    "university_code": asp.get("university_code"),
+                    "major_name": asp.get("major_name"),
+                    "major_group_name": best_group,
+                    "match_percentage": round(best_score * 100)
+                })
 
         # 2. Enrich User Profile with Discovery Interests
         # We temporarily boost the interest_match for majors the system found compatible
@@ -446,7 +490,33 @@ class RecommendationEngine:
         }
 
         return {
-            "top_majors": top_majors,
+            "top_majors": top_majors if len(user.aspirations) == 0 else [],
+            "aspiration_matches": aspiration_matches,
             "recommendations": recommendations,
             "metadata": metadata,
         }
+
+def print_recommendations(result: dict):
+    """Helper to pretty-print recommendation results"""
+    if "top_majors" in result and result["top_majors"]:
+        print("\n  [Top Major Groups Match]:")
+        for m in result["top_majors"]:
+            print(f"   -> {m['major_group_name']}: {m['match_percentage']}%")
+            
+    if "aspiration_matches" in result and result["aspiration_matches"]:
+        print("\n  [Aspiration Matches]:")
+        for a in result["aspiration_matches"]:
+            print(f"   -> {a.get('major_name')} ({a.get('major_group_name')}): {a.get('match_percentage')}%")
+            
+    print("\n  [Program Recommendations]:")
+    recs = result.get("recommendations", [])
+    if not recs:
+        print("   (No recommendations found)")
+        return
+        
+    for r in recs:
+        safety = r.get("safety_level", "unknown")
+        trend = r.get("score_trend", "unknown")
+        score = r.get("latest_score_thpt", "N/A")
+        print(f"   [{safety.upper()}] {r.get('university_code')} - {r.get('major_name')}")
+        print(f"        Score: {score} | Trend: {trend} | Rec Score: {r.get('recommendation_score')}")

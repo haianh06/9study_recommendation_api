@@ -15,6 +15,8 @@ Metrics:
 """
 
 import sys
+import os
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 sys.stdout.reconfigure(encoding="utf-8")
 
 import numpy as np
@@ -36,13 +38,11 @@ SYNTHETIC_PROFILES = [
         "profile": UserProfile(
             exam_block=["A00", "A01"],
             total_score=24.0,
-            province="Hà Nội",
-            preferred_provinces=["Hà Nội"],
             interest_keywords=["kỹ thuật", "công nghệ", "máy tính"],
             major_group_names=["Khoa học máy tính - Kỹ thuật phần mềm"],
         ),
         "expected_groups": ["Khoa học máy tính - Kỹ thuật phần mềm"],
-        "expected_provinces": ["Hà Nội"],
+        "expected_provinces": [],
         "min_score": 18.0,
         "max_score": 27.0,
     },
@@ -51,28 +51,23 @@ SYNTHETIC_PROFILES = [
         "profile": UserProfile(
             exam_block=["D01", "C00"],
             total_score=27.0,
-            province="TP.HCM",
-            preferred_provinces=["TP.HCM"],
             interest_keywords=["kinh doanh", "quản trị", "marketing"],
             major_group_names=["Kinh tế - Quản trị kinh doanh"],
         ),
         "expected_groups": ["Kinh tế - Quản trị kinh doanh", "Kế toán - Kiểm toán"],
-        "expected_provinces": ["TP.HCM"],
+        "expected_provinces": [],
         "min_score": 22.0,
         "max_score": 30.0,
     },
     {
-        "name": "Trung Bình - Đà Nẵng - Budget",
+        "name": "Trung Bình - Đà Nẵng",
         "profile": UserProfile(
             exam_block=["A00"],
             total_score=18.5,
-            province="Đà Nẵng",
-            budget_max=25_000_000,
-            preferred_provinces=["Đà Nẵng", "Huế"],
             university_type="Công lập",
         ),
-        "expected_groups": [],  # Any group OK
-        "expected_provinces": ["Đà Nẵng", "Huế"],
+        "expected_groups": [],
+        "expected_provinces": [],
         "min_score": 14.0,
         "max_score": 21.5,
     },
@@ -81,28 +76,24 @@ SYNTHETIC_PROFILES = [
         "profile": UserProfile(
             exam_block=["B00"],
             total_score=28.5,
-            province="Hà Nội",
-            preferred_provinces=["Hà Nội", "TP.HCM", "Huế"],
             interest_keywords=["y khoa", "dược", "y tế"],
             major_group_names=["Y - Dược"],
         ),
         "expected_groups": ["Y - Dược"],
-        "expected_provinces": ["Hà Nội", "TP.HCM", "Huế"],
+        "expected_provinces": [],
         "min_score": 24.0,
         "max_score": 30.0,
     },
     {
-        "name": "Khá - Sư Phạm - Tỉnh lẻ",
+        "name": "Khá - Sư Phạm",
         "profile": UserProfile(
             exam_block=["A00", "A01", "D01"],
             total_score=22.0,
-            province="Thanh Hóa",
-            budget_max=15_000_000,
             interest_keywords=["sư phạm", "giáo dục", "dạy học"],
             major_group_names=["Sư phạm"],
         ),
         "expected_groups": ["Sư phạm"],
-        "expected_provinces": [],  # Any province OK
+        "expected_provinces": [],
         "min_score": 16.0,
         "max_score": 25.0,
     },
@@ -111,10 +102,9 @@ SYNTHETIC_PROFILES = [
         "profile": UserProfile(
             exam_block=["A00"],
             total_score=20.0,
-            province="Nghệ An",
         ),
         "expected_groups": [],
-        "expected_provinces": ["Nghệ An"],
+        "expected_provinces": [],
         "min_score": 14.0,
         "max_score": 23.0,
     },
@@ -123,13 +113,11 @@ SYNTHETIC_PROFILES = [
         "profile": UserProfile(
             exam_block=["D01"],
             total_score=26.0,
-            province="Hà Nội",
-            preferred_provinces=["Hà Nội", "TP.HCM"],
             interest_keywords=["ngôn ngữ", "tiếng anh", "phiên dịch", "du lịch"],
             major_group_names=["Ngôn ngữ - Ngoại ngữ"],
         ),
         "expected_groups": ["Ngôn ngữ - Ngoại ngữ"],
-        "expected_provinces": ["Hà Nội", "TP.HCM"],
+        "expected_provinces": [],
         "min_score": 20.0,
         "max_score": 29.0,
     },
@@ -138,13 +126,11 @@ SYNTHETIC_PROFILES = [
         "profile": UserProfile(
             exam_block=["A00", "A01"],
             total_score=21.0,
-            province="Hải Phòng",
-            preferred_provinces=["Hà Nội", "Hải Phòng"],
             interest_keywords=["xây dựng", "kiến trúc", "kỹ thuật"],
             major_group_names=["Xây dựng - Kiến trúc"],
         ),
         "expected_groups": ["Xây dựng - Kiến trúc"],
-        "expected_provinces": ["Hà Nội", "Hải Phòng"],
+        "expected_provinces": [],
         "min_score": 15.0,
         "max_score": 24.0,
     },

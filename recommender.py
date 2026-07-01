@@ -28,7 +28,6 @@ class UserProfile:
     # Level 1 (Required)
     exam_block: List[str]             # e.g., ["A00", "A01", "D01"]
     total_score: float                # Tổng điểm (thang 30)
-    province: str                     # Tỉnh/TP hiện tại
     
     # Aspirations & Personality (Blended Recommendation)
     flow_type: str = "mock_exam" # "mock_exam" or "discovery"
@@ -82,7 +81,11 @@ class RecommendationEngine:
 
     def _load_flow_weights(self):
         try:
-            weights_path = os.path.join(os.path.dirname(__file__), "weights.json")
+            # Look in config/ first (new layout), fall back to same dir
+            base = os.path.dirname(__file__)
+            weights_path = os.path.join(base, "config", "weights.json")
+            if not os.path.exists(weights_path):
+                weights_path = os.path.join(base, "weights.json")
             if os.path.exists(weights_path):
                 with open(weights_path, "r", encoding="utf-8") as f:
                     return json.load(f)
@@ -254,7 +257,7 @@ class RecommendationEngine:
             return base * 0.9
 
     @staticmethod
-    def _interest_match(self, user: UserProfile, search_text: str, major_group_name: Optional[str]) -> float:
+    def _interest_match(user: UserProfile, search_text: str, major_group_name: Optional[str]) -> float:
         score = 0.0
         count = 0
         if user.major_group_names and major_group_name:
@@ -379,8 +382,15 @@ class RecommendationEngine:
                     "match_percentage": round(score * 100)
                 })
         
-        # Sort and take top 10
-        top_majors = sorted(top_majors, key=lambda x: x["match_percentage"], reverse=True)[:10]
+        # Sort
+        top_majors_sorted = sorted(top_majors, key=lambda x: x["match_percentage"], reverse=True)
+        
+        # Categorize
+        top_majors_categorized = {
+            "highly_suitable": [m for m in top_majors_sorted if m["match_percentage"] >= 85],
+            "suitable": [m for m in top_majors_sorted if 70 <= m["match_percentage"] < 85],
+            "need_more_info": [m for m in top_majors_sorted if m["match_percentage"] < 70][:5]
+        }
 
         # 1.5. Compute Aspiration Matches explicitly
         aspiration_matches = []
@@ -416,7 +426,7 @@ class RecommendationEngine:
         # We temporarily boost the interest_match for majors the system found compatible
         original_interest = user.major_group_names.copy()
         extended_interest = set(original_interest)
-        for tm in top_majors:
+        for tm in top_majors_sorted:
             if tm["match_percentage"] >= 60:
                 extended_interest.add(tm["major_group_name"])
         user.major_group_names = list(extended_interest)
@@ -427,7 +437,7 @@ class RecommendationEngine:
         if len(filtered_df) == 0:
             user.major_group_names = original_interest
             return {
-                "top_majors": top_majors,
+                "top_majors": top_majors_categorized,
                 "recommendations": [],
                 "metadata": {"after_filter": 0, "message": "No programs match your criteria."}
             }
@@ -490,7 +500,9 @@ class RecommendationEngine:
         }
 
         return {
-            "top_majors": top_majors if len(user.aspirations) == 0 else [],
+            "top_majors": top_majors_categorized if len(user.aspirations) == 0 else {
+                "highly_suitable": [], "suitable": [], "need_more_info": []
+            },
             "aspiration_matches": aspiration_matches,
             "recommendations": recommendations,
             "metadata": metadata,
@@ -498,10 +510,11 @@ class RecommendationEngine:
 
 def print_recommendations(result: dict):
     """Helper to pretty-print recommendation results"""
-    if "top_majors" in result and result["top_majors"]:
+    if "top_majors" in result and any(result["top_majors"].values()):
         print("\n  [Top Major Groups Match]:")
-        for m in result["top_majors"]:
-            print(f"   -> {m['major_group_name']}: {m['match_percentage']}%")
+        for cat, lst in result["top_majors"].items():
+            for m in lst:
+                print(f"   -> [{cat.upper()}] {m['major_group_name']}: {m['match_percentage']}%")
             
     if "aspiration_matches" in result and result["aspiration_matches"]:
         print("\n  [Aspiration Matches]:")

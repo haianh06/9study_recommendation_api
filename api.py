@@ -29,8 +29,17 @@ from personality_mapper import (
     get_recommendations_from_mbti, 
     get_recommendations_from_holland,
     calculate_numerology,
-    get_zodiac_sign
+    get_zodiac_sign,
+    HOLLAND_QUESTIONS,
+    LEARNING_STYLE_QUESTIONS,
+    QUIZ_SCALE,
+    score_holland_answers,
+    score_learning_style,
+    get_personality_insights,
+    get_highlight_group,
+    get_numerology_insights,
 )
+
 
 
 # ──────────────────────────────────────────
@@ -121,13 +130,28 @@ class AspirationMatchResponse(BaseModel):
     match_percentage: float
 
 
+class TopMajorsCategorizedResponse(BaseModel):
+    highly_suitable: List[TopMajorResponse] = Field(default_factory=list, description="Top majors >= 85%")
+    suitable: List[TopMajorResponse] = Field(default_factory=list, description="Top majors 70% - 84%")
+    need_more_info: List[TopMajorResponse] = Field(default_factory=list, description="Top majors < 70%")
+
+class NumerologyInsightsResponse(BaseModel):
+    number: int
+    keywords: List[str]
+    strengths: List[str]
+    weaknesses: List[str]
+    development: List[str]
+    core_orientation: List[str]
+
+
 class RecommendationResponse(BaseModel):
     """Response containing recommendations and metadata."""
-    top_majors: List[TopMajorResponse] = []
+    top_majors: TopMajorsCategorizedResponse
     aspiration_matches: List[AspirationMatchResponse] = []
     recommendations: List[Dict[str, Any]]
     metadata: Dict[str, Any]
     explanations: List[Dict[str, Any]] = []
+    numerology_insights: Optional[NumerologyInsightsResponse] = None
 
 
 class MajorGroupResponse(BaseModel):
@@ -144,16 +168,129 @@ class HealthResponse(BaseModel):
     programs_with_scores: int
 
 
-class PersonalityRequest(BaseModel):
-    """Request for personality-based mapping."""
-    mbti: Optional[str] = Field(None, description="MBTI code (e.g. INTJ)")
-    holland: Optional[str] = Field(None, description="Holland RIASEC code (e.g. SEC)")
+
+# ── Quiz Models ──
+
+class QuizQuestionModel(BaseModel):
+    """A single quiz question."""
+    id: str
+    q_num: int
+    text: str
+    holland_group: Optional[str] = None   # only for Holland questions
+    style_group: Optional[str] = None     # only for Learning Style questions
 
 
-class PersonalityResponse(BaseModel):
-    """Mapped major groups and keywords."""
-    major_group_names: List[str]
+class QuizScreenModel(BaseModel):
+    """One screen (màn) of quiz questions."""
+    screen: int
+    title: str
+    description: str
+    questions: List[QuizQuestionModel]
+
+
+class QuizResponse(BaseModel):
+    """Full quiz with all screens."""
+    total_questions: int
+    screens: List[QuizScreenModel]
+    scale: Dict[str, Any]
+
+
+class QuizAnswerRequest(BaseModel):
+    """User's answers to the personality quiz."""
+    answers: Dict[str, int] = Field(
+        ...,
+        description="Map of question_id → score (1–5). Holland IDs: H_S{screen}_Q{num}, Learning Style IDs: LS_Q{num}"
+    )
+
+    class Config:
+        json_schema_extra = {
+            "example": {
+                "answers": {
+                    "H_S1_Q1": 4, "H_S1_Q2": 3, "H_S1_Q3": 5, "H_S1_Q4": 5,
+                    "H_S1_Q5": 2, "H_S1_Q6": 2, "H_S1_Q7": 3, "H_S1_Q8": 3,
+                    "H_S1_Q9": 4, "H_S1_Q10": 4, "H_S1_Q11": 3, "H_S1_Q12": 3,
+                    "H_S2_Q1": 4, "H_S2_Q2": 3, "H_S2_Q3": 5, "H_S2_Q4": 5,
+                    "H_S2_Q5": 2, "H_S2_Q6": 2, "H_S2_Q7": 3, "H_S2_Q8": 3,
+                    "H_S2_Q9": 4, "H_S2_Q10": 4, "H_S2_Q11": 3, "H_S2_Q12": 3,
+                    "H_S3_Q1": 3, "H_S3_Q2": 3, "H_S3_Q3": 5, "H_S3_Q4": 5,
+                    "H_S3_Q5": 2, "H_S3_Q6": 2, "H_S3_Q7": 3, "H_S3_Q8": 2,
+                    "H_S3_Q9": 4, "H_S3_Q10": 4, "H_S3_Q11": 3, "H_S3_Q12": 3,
+                    "LS_Q1": 3, "LS_Q2": 3, "LS_Q3": 3, "LS_Q4": 3,
+                    "LS_Q5": 5, "LS_Q6": 5, "LS_Q7": 5, "LS_Q8": 5,
+                    "LS_Q9": 4, "LS_Q10": 4, "LS_Q11": 3, "LS_Q12": 3,
+                    "LS_Q13": 3, "LS_Q14": 3, "LS_Q15": 3, "LS_Q16": 3
+                }
+            }
+        }
+
+
+class PersonalityInsights(BaseModel):
+    """Personality analysis insights (learning style focused)."""
+    holland_primary: str
+    holland_name: str
+    holland_description: str
+    holland_traits: List[str]
+    suggested_careers: List[str]
+    learning_style_name: str
+    learning_style_description: str
+    study_tips: List[str]
+
+
+# ── UI-ready Holland chart models ──
+
+class HollandGroupScore(BaseModel):
+    """Một điểm trên line chart (6 nhóm theo thứ tự R-I-A-S-E-C)."""
+    code: str = Field(description="Ký hiệu nhóm, e.g. 'I'")
+    short_name: str = Field(description="Tên ngắn hiển thị trên chart, e.g. 'Nghiên cứu'")
+    score: float = Field(description="Điểm phần trăm 0–100")
+
+
+class HollandTopGroup(BaseModel):
+    """Một nhóm trong footer Top 1/2/3."""
+    rank: int = Field(description="Thứ hạng 1, 2 hoặc 3")
+    code: str
+    short_name: str
+    score: float = Field(description="Điểm phần trăm 0–100")
+
+
+class HollandHighlightGroup(BaseModel):
+    """Dữ liệu đầy đủ cho phần 'Nhóm nổi bật nhất' trên UI."""
+    code: str
+    short_name: str
+    full_name: str
+    tagline: str
+    description: str
+    strengths: List[str]
+    suitable_majors: List[str]
+    work_environment: str
+
+
+class QuizResultResponse(BaseModel):
+    """
+    Kết quả sau khi nộp bài test tính cách.
+
+    Cấu trúc response map 1:1 với UI design:
+    - `chart_data`      → Line chart (6 nhóm theo thứ tự R-I-A-S-E-C)
+    - `highlight_group` → Phần "Nhóm nổi bật nhất" (khối màu tím giữa)
+    - `top_3_groups`    → Footer Top 1 / Top 2 / Top 3
+    """
+    # Holland — UI ready
+    holland_code: str = Field(description="Mã Holland 3 chữ cái, e.g. 'IRA'")
+    chart_data: List[HollandGroupScore] = Field(description="6 nhóm theo thứ tự R-I-A-S-E-C để vẽ line chart")
+    highlight_group: HollandHighlightGroup = Field(description="Nhóm #1 với mô tả đầy đủ")
+    top_3_groups: List[HollandTopGroup] = Field(description="Top 3 nhóm cao điểm nhất")
+    # Holland — raw data
+    holland_scores: Dict[str, int] = Field(description="Điểm thô mỗi nhóm (tối đa 30)")
+    holland_percentages: Dict[str, float] = Field(description="Phần trăm mỗi nhóm (0–100)")
+    # Learning Style
+    learning_style: str = Field(description="Phong cách học nổi trội")
+    learning_style_scores: Dict[str, int]
+    learning_style_percentages: Dict[str, float]
+    # Recommendations
+    major_group_names: List[str] = Field(description="Nhóm ngành gợi ý dựa trên Holland code")
     interest_keywords: List[str]
+    # Insights
+    personality_insights: PersonalityInsights
 
 
 # ──────────────────────────────────────────
@@ -246,31 +383,156 @@ async def list_major_groups():
     ]
 
 
-@app.post("/onboarding/personality", response_model=PersonalityResponse, tags=["Onboarding"])
-async def get_personality_mapping(request: PersonalityRequest):
+@app.get("/onboarding/quiz", response_model=QuizResponse, tags=["Onboarding"])
+async def get_onboarding_quiz():
     """
-    Map MBTI or Holland codes to major groups and keywords for cold-start recommendations.
+    Lấy toàn bộ bộ câu hỏi onboarding (52 câu, 4 màn).
+
+    **Cấu trúc:**
+    - Màn 1 – "Tôi là người…" (12 câu Holland, nhóm tính cách)
+    - Màn 2 – "Tôi có thể…" (12 câu Holland, nhóm năng lực)
+    - Màn 3 – "Tôi thích…" (12 câu Holland, nhóm sở thích)
+    - Màn 4 – Phong cách học tập (16 câu Learning Style)
+
+    **Thang điểm:** 1 (Rất không giống) → 5 (Rất giống)
+
+    Sau khi thu thập đủ câu trả lời, gọi `POST /onboarding/quiz/submit`.
     """
-    groups = []
-    keywords = []
-    
-    if request.mbti:
-        g, k = get_recommendations_from_mbti(request.mbti)
-        groups.extend(g)
-        keywords.extend(k)
-        
-    if request.holland:
-        g, k = get_recommendations_from_holland(request.holland)
-        groups.extend(g)
-        keywords.extend(k)
-        
-    # Deduplicate
-    groups = list(dict.fromkeys(groups))
-    keywords = list(dict.fromkeys(keywords))
-    
-    return PersonalityResponse(
-        major_group_names=groups,
-        interest_keywords=keywords
+    screen_meta = [
+        {
+            "screen": 1,
+            "title": "Tôi là người…",
+            "description": "Đánh giá mức độ phù hợp với từng mô tả về tính cách của bạn."
+        },
+        {
+            "screen": 2,
+            "title": "Tôi có thể…",
+            "description": "Đánh giá mức độ bạn có thể thực hiện những việc sau."
+        },
+        {
+            "screen": 3,
+            "title": "Tôi thích…",
+            "description": "Đánh giá mức độ bạn yêu thích các hoạt động sau."
+        },
+        {
+            "screen": 4,
+            "title": "Phong cách học tập",
+            "description": "Đánh giá mức độ phù hợp với cách bạn thường học."
+        },
+    ]
+
+    screens = []
+
+    # Màn 1–3: Holland RIASEC
+    for meta in screen_meta[:3]:
+        s = meta["screen"]
+        q_list = [
+            QuizQuestionModel(
+                id=q["id"],
+                q_num=q["q_num"],
+                text=q["text"],
+                holland_group=q["holland_group"]
+            )
+            for q in HOLLAND_QUESTIONS if q["screen"] == s
+        ]
+        screens.append(QuizScreenModel(
+            screen=s,
+            title=meta["title"],
+            description=meta["description"],
+            questions=q_list
+        ))
+
+    # Màn 4: Learning Style
+    ls_questions = [
+        QuizQuestionModel(
+            id=q["id"],
+            q_num=q["q_num"],
+            text=q["text"],
+            style_group=q["style_group"]
+        )
+        for q in LEARNING_STYLE_QUESTIONS
+    ]
+    screens.append(QuizScreenModel(
+        screen=4,
+        title=screen_meta[3]["title"],
+        description=screen_meta[3]["description"],
+        questions=ls_questions
+    ))
+
+    total = sum(len(sc.questions) for sc in screens)
+
+    return QuizResponse(
+        total_questions=total,
+        screens=screens,
+        scale=QUIZ_SCALE
+    )
+
+
+@app.post("/onboarding/quiz/submit", response_model=QuizResultResponse, tags=["Onboarding"])
+async def submit_onboarding_quiz(request: QuizAnswerRequest):
+    """
+    Nộp câu trả lời bộ test tính cách và nhận kết quả phân tích.
+
+    **Input:** dict `answers` với key = question_id, value = điểm 1–5.
+    - Holland IDs: `H_S{screen}_Q{num}` (36 câu, màn 1–3)
+    - Learning Style IDs: `LS_Q{num}` (16 câu, màn 4)
+
+    **Output:**
+    - `holland_code`: Mã Holland 3 chữ cái (ví dụ: "RIA")
+    - `learning_style`: Phong cách học tập nổi trội
+    - `major_group_names`: Nhóm ngành được gợi ý
+    - `personality_insights`: Phân tích chi tiết và tips học tập
+    """
+    answers = request.answers
+
+    # Validate: cần ít nhất 1 câu Holland hoặc Learning Style
+    holland_ans = {k: v for k, v in answers.items() if k.startswith("H_")}
+    ls_ans = {k: v for k, v in answers.items() if k.startswith("LS_")}
+
+    if not holland_ans and not ls_ans:
+        raise HTTPException(
+            status_code=422,
+            detail="Cần cung cấp ít nhất 1 câu trả lời (Holland: H_S*_Q* hoặc Learning Style: LS_Q*)"
+        )
+
+    # Score Holland
+    holland_result = score_holland_answers(holland_ans)
+    holland_code = holland_result["holland_code"]
+
+    # Score Learning Style
+    ls_result = score_learning_style(ls_ans)
+    dominant_style = ls_result["dominant_style"]
+
+    # Map Holland code → major groups + keywords
+    major_groups, keywords = get_recommendations_from_holland(holland_code)
+
+    # Build UI-ready chart data
+    chart_data = [HollandGroupScore(**item) for item in holland_result["chart_data"]]
+    top_3_groups = [HollandTopGroup(**item) for item in holland_result["top_3_groups"]]
+    highlight_raw = get_highlight_group(holland_code)
+    highlight = HollandHighlightGroup(**highlight_raw)
+
+    # Build personality insights (learning style focused)
+    insights_raw = get_personality_insights(holland_code, dominant_style)
+    insights = PersonalityInsights(**insights_raw)
+
+    return QuizResultResponse(
+        # Holland — UI ready
+        holland_code=holland_code,
+        chart_data=chart_data,
+        highlight_group=highlight,
+        top_3_groups=top_3_groups,
+        # Holland — raw
+        holland_scores=holland_result["scores"],
+        holland_percentages=holland_result["percentages"],
+        # Learning Style
+        learning_style=dominant_style,
+        learning_style_scores=ls_result["scores"],
+        learning_style_percentages=ls_result["percentages"],
+        # Recommendations
+        major_group_names=major_groups,
+        interest_keywords=keywords,
+        personality_insights=insights,
     )
 
 
@@ -333,6 +595,12 @@ async def get_recommendations(request: RecommendationRequest):
         return obj
 
     result = clean_nan(result)
+
+    # Add numerology insights if DOB is provided
+    if request.dob:
+        result["numerology_insights"] = get_numerology_insights(request.dob)
+    else:
+        result["numerology_insights"] = None
 
     return RecommendationResponse(**result)
 

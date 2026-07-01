@@ -29,3 +29,7 @@ Thumbs.db
 # Model artifacts
 models/*.pkl
 models/*.joblib
+
+# Generated / large artifacts
+config/schema_snapshot.json
+docs/*.docx

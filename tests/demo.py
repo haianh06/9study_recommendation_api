@@ -5,12 +5,13 @@ Tests the recommendation engine with sample user profiles.
 """
 
 import sys
+import os
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 sys.stdout.reconfigure(encoding="utf-8")
 
 from data_loader import DataLoader
 from recommender import RecommendationEngine, UserProfile, print_recommendations
 from personality_mapper import calculate_numerology, get_zodiac_sign
-
 
 def main():
     print("=" * 80)
@@ -55,7 +56,6 @@ def main():
         exam_block=["D01"],
         total_score=27.0,
         subject_scores={"Toán": 9.0, "Văn": 8.5, "Tiếng Anh": 9.5},
-        budget_max=30_000_000,  # 30 triệu/năm
         university_type="Công lập",
         interest_keywords=["kinh doanh", "quản trị", "tài chính", "marketing"],
         major_group_names=["Kinh tế - Quản trị kinh doanh", "Kế toán - Kiểm toán"],
